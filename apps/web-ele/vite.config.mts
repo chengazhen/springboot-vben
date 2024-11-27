@@ -20,6 +20,11 @@ export default defineConfig(async () => {
             target: 'http://localhost:5320/api',
             ws: true,
           },
+          '/local': {
+            target: 'http://localhost:9090',
+            changeOrigin: true,
+            rewrite: (path: string) => path.replace(/^\/local/, ''),
+          },
         },
       },
     },

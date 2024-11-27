@@ -63,12 +63,46 @@
         />
       </div>
     </ElCard>
+
+
+    <ElDialog
+  v-model="dialogVisible"
+  title="新建用户"
+  width="500px"
+>
+  <ElForm
+    ref="formRef"
+    :model="formData"
+    label-width="80px"
+  >
+    <ElFormItem label="用户名" prop="username">
+      <ElInput v-model="formData.username" placeholder="请输入用户名" />
+    </ElFormItem>
+    <ElFormItem label="密码" prop="password">
+      <ElInput
+        v-model="formData.password"
+        type="password"
+        placeholder="请输入密码"
+        show-password
+      />
+    </ElFormItem>
+  </ElForm>
+  <template #footer>
+    <span class="dialog-footer">
+      <ElButton @click="dialogVisible = false">取消</ElButton>
+      <ElButton type="primary" @click="handleSubmit">确定</ElButton>
+    </span>
+  </template>
+</ElDialog>
+
+    
   </div>
 </template>
 
 <script setup lang="ts">
-import { ElCard, ElForm, ElFormItem, ElInput, ElSelect, ElOption, ElButton, ElTable, ElTableColumn, ElPagination } from 'element-plus';
+import { ElDialog, ElCard, ElForm, ElFormItem, ElInput, ElSelect, ElOption, ElButton, ElTable, ElTableColumn, ElPagination } from 'element-plus';
 import { ref, reactive } from 'vue';
+import { createUserApi } from '#/api/core/user';
 
 interface QueryParams {
   username: string;
@@ -101,7 +135,9 @@ const resetQuery = () => {
 };
 
 const handleAdd = () => {
-  // TODO: 实现新增用户逻辑
+  dialogVisible.value = true;
+  formData.username = '';
+  formData.password = '';
 };
 
 const handleEdit = (row: any) => {
@@ -123,6 +159,27 @@ const handleSizeChange = (val: number) => {
 
 const handleCurrentChange = (val: number) => {
   queryParams.pageNum = val;
+  handleQuery();
+};
+
+const dialogVisible = ref(false);
+const formData = reactive({
+  username: '',
+  password: ''
+});
+const formRef = ref();
+
+
+const handleSubmit = async () => {
+  // TODO: Add your API call here to create the user
+  // const res = await createUser(formData);
+  dialogVisible.value = false;
+
+  const res = await createUserApi(formData);
+
+  console.log(res);
+  
+  // Refresh the user list after successful creation
   handleQuery();
 };
 </script>

@@ -110,4 +110,27 @@ function createRequestClient(baseURL: string) {
 
 export const requestClient = createRequestClient(apiURL);
 
+
+function createSpringBootRequestClient(baseURL: string) {
+  const client = new RequestClient({
+    baseURL,
+  });
+
+  client.addResponseInterceptor<HttpResponse>({
+    fulfilled: (response) => {
+      const { data: responseData, status } = response;
+      const { code, data } = responseData;
+      if (status >= 200 && status < 400 && code === '0') {
+        return data;
+      }
+      throw Object.assign({}, response, { response });
+    },
+  });
+
+  return client;
+}
+
 export const baseRequestClient = new RequestClient({ baseURL: apiURL });
+
+
+export const springBootRequestClient = createSpringBootRequestClient('/local');

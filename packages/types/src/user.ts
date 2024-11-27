@@ -17,4 +17,9 @@ interface UserInfo extends BasicUserInfo {
   token: string;
 }
 
-export type { UserInfo };
+interface UserState {
+  username: string;
+  password: string;
+}
+
+export type { UserInfo, UserState };
