@@ -32,7 +32,7 @@ catalog:
   '@manypkg/get-packages': ^2.2.2
   '@nolebase/vitepress-plugin-git-changelog': ^2.10.0
   '@playwright/test': ^1.49.0
-  '@pnpm/workspace.read-manifest': ^2.2.1
+  '@pnpm/workspace.read-manifest': ^1000.1.0
   '@stylistic/stylelint-plugin': ^3.1.1
   '@tailwindcss/nesting': 0.0.0-insiders.565cd3e
   '@tailwindcss/typography': ^0.5.15
